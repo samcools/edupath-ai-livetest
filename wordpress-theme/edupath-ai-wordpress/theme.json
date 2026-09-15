@@ -1,0 +1,6 @@
+{
+  "$schema":"https://schemas.wp.org/trunk/theme.json",
+  "version":3,
+  "settings":{"appearanceTools":true,"layout":{"contentSize":"1500px","wideSize":"1600px"},"typography":{"fluid":true},"color":{"custom":true}},
+  "styles":{"typography":{"fontFamily":"Inter, system-ui, sans-serif"}}
+}
