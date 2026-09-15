@@ -29,13 +29,14 @@ function edupath_ai_assets() {
 
     $settings = get_option( 'edupath_ai_microsoft_agents', array() );
     wp_localize_script( 'edupath-ai-app', 'EduPathConfig', array(
-        'restUrl'    => esc_url_raw( rest_url( 'edupath/v1/' ) ),
-        'nonce'      => wp_create_nonce( 'wp_rest' ),
-        'loggedIn'   => is_user_logged_in(),
-        'user'       => is_user_logged_in() ? wp_get_current_user()->display_name : 'Demo User',
-        'themeUrl'   => EDUPATH_AI_URI,
-        'agentMode'  => ! empty( $settings['mode'] ) ? sanitize_text_field( $settings['mode'] ) : 'demo',
-        'agentProxy' => ! empty( $settings['proxy_url'] ) ? esc_url_raw( $settings['proxy_url'] ) : '',
+        'restUrl'     => esc_url_raw( rest_url( 'edupath/v1/' ) ),
+        'nonce'       => wp_create_nonce( 'wp_rest' ),
+        'loggedIn'    => is_user_logged_in(),
+        'user'        => is_user_logged_in() ? wp_get_current_user()->display_name : 'Demo User',
+        'themeUrl'    => EDUPATH_AI_URI,
+        'agentMode'   => ! empty( $settings['mode'] ) ? sanitize_text_field( $settings['mode'] ) : 'demo',
+        'agentProxy'  => ! empty( $settings['proxy_url'] ) ? esc_url_raw( $settings['proxy_url'] ) : '',
+        'speechProxy' => ! empty( $settings['speech_proxy_url'] ) ? esc_url_raw( $settings['speech_proxy_url'] ) : '',
     ) );
 }
 add_action( 'wp_enqueue_scripts', 'edupath_ai_assets' );
