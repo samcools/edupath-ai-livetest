@@ -1,0 +1,43 @@
+name: Build WordPress Theme
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'wordpress-theme/**'
+      - 'scripts/build-theme.sh'
+      - '.github/workflows/build-wordpress-theme.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Validate PHP syntax
+        run: |
+          find wordpress-theme/edupath-ai-wordpress -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Validate JavaScript syntax
+        run: |
+          node --check wordpress-theme/edupath-ai-wordpress/assets/js/edupath-app.js
+          node --check wordpress-theme/edupath-ai-wordpress/assets/js/edupath-voice.js
+
+      - name: Build installable theme ZIP
+        run: bash scripts/build-theme.sh
+
+      - name: Verify ZIP integrity
+        run: unzip -t dist/edupath-ai-wordpress-theme.zip
+
+      - name: Upload installable theme
+        uses: actions/upload-artifact@v4
+        with:
+          name: edupath-ai-wordpress-theme
+          path: dist/edupath-ai-wordpress-theme.zip
+          if-no-files-found: error
+          retention-days: 30
