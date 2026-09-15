@@ -10,23 +10,27 @@ A hackathon-ready WordPress theme that converts the supplied EduPath AI V11 prot
 - Ayanda text + voice assistant.
 - Deterministic low-latency voice navigation before agent fallback.
 - Voice/text write instructions that open a confirmation preview instead of silently changing consequential data.
-- WordPress REST routes for status, agent proxy and authenticated actions.
+- WordPress REST routes for status, agent proxy, authenticated actions and authenticated server transcription fallback.
 - Local demo audit trail plus server-side audit capture for authenticated WordPress actions.
 - Responsive desktop/tablet/mobile interface.
 
 ## Microsoft agent architecture
 
-The theme does **not** place Microsoft or Azure secrets in browser JavaScript. Use **Appearance → EduPath AI Agents** to configure an organisation-controlled HTTPS proxy to Microsoft Foundry Agent Service, Copilot Studio, or a Microsoft 365 Agents SDK service.
+The theme does **not** place Microsoft or Azure secrets in browser JavaScript. Use **Appearance → EduPath AI Agents** to configure organisation-controlled HTTPS proxies to Microsoft Foundry Agent Service, Copilot Studio / Microsoft 365 Agents SDK orchestration, and an optional speech-transcription service.
 
-See `docs/MICROSOFT-AGENT-MAP.md`.
+See `docs/MICROSOFT-AGENT-MAP.md` and `docs/VOICE-COMMANDS.md`.
 
 ## Install
 
-1. Zip the `edupath-ai-wordpress` directory.
+1. Use the installable `edupath-ai-wordpress-theme.zip` package, or zip the `edupath-ai-wordpress` directory.
 2. WordPress Admin → Appearance → Themes → Add New → Upload Theme.
 3. Activate **EduPath AI Guardian**.
 4. Set a static front page if your WordPress configuration does not automatically use `front-page.php`.
-5. Optional: configure the Microsoft agent proxy in Appearance → EduPath AI Agents.
+5. Optional: configure Microsoft agent and speech proxies in Appearance → EduPath AI Agents.
+
+## Automated validation and packaging
+
+`.github/workflows/build-wordpress-theme.yml` validates PHP and JavaScript syntax, builds the installable theme ZIP, verifies the archive, and uploads it as a GitHub Actions artifact. `scripts/build-theme.sh` provides the same packaging step locally.
 
 ## Security boundary
 
