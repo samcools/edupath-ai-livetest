@@ -32,4 +32,4 @@ See `docs/MICROSOFT-AGENT-MAP.md`.
 
 This is a hackathon implementation, not a claim of production deployment. Synthetic data is used. Production use requires Microsoft Entra identity, persistent RBAC/ABAC, POPIA-aligned consent/retention controls, secured integration credentials, database-backed domain records, formal threat modelling, monitoring and testing.
 
-The supplied Ayanda image should be reviewed for licensing/usage rights before public or commercial deployment.
+The repository build uses an original abstract Ayanda SVG avatar and references the authentic Pyrneo wordmark URL rather than fabricating a substitute logo.
