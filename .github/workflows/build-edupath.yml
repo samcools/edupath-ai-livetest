@@ -1,0 +1,62 @@
+name: Validate and Package EduPath AI
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'MASTER-BUILD-PROMPT.md'
+      - 'README.md'
+      - 'releases/v3.1.0/**'
+      - 'scripts/restore-v3.1.0-source.sh'
+      - '.github/workflows/build-edupath.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Restore current source snapshot
+        run: |
+          bash scripts/restore-v3.1.0-source.sh "$RUNNER_TEMP/edupath-v3.1.0"
+
+      - name: Validate PHP syntax
+        run: |
+          ROOT="$RUNNER_TEMP/edupath-v3.1.0"
+          find "$ROOT/wordpress-theme/edupath-ai-theme" "$ROOT/wordpress-plugin/edupath-ai-platform" -name '*.php' -print0 | xargs -0 -n1 php -l
+
+      - name: Validate JavaScript syntax
+        run: |
+          ROOT="$RUNNER_TEMP/edupath-v3.1.0"
+          find "$ROOT/wordpress-theme/edupath-ai-theme" "$ROOT/wordpress-plugin/edupath-ai-platform" -name '*.js' -print0 | xargs -0 -n1 node --check
+
+      - name: Build installable ZIPs
+        run: |
+          ROOT="$RUNNER_TEMP/edupath-v3.1.0"
+          mkdir -p dist
+          cd "$ROOT/wordpress-theme"
+          zip -rq "$GITHUB_WORKSPACE/dist/edupath-ai-theme-v3.1.0.zip" edupath-ai-theme
+          cd "$ROOT/wordpress-plugin"
+          zip -rq "$GITHUB_WORKSPACE/dist/edupath-ai-platform-v3.1.0.zip" edupath-ai-platform
+
+      - name: Verify package structure
+        run: |
+          unzip -t dist/edupath-ai-theme-v3.1.0.zip
+          unzip -t dist/edupath-ai-platform-v3.1.0.zip
+          unzip -l dist/edupath-ai-theme-v3.1.0.zip | grep 'edupath-ai-theme/style.css'
+          unzip -l dist/edupath-ai-platform-v3.1.0.zip | grep 'edupath-ai-platform/edupath-ai-platform.php'
+
+      - name: Upload WordPress packages
+        uses: actions/upload-artifact@v4
+        with:
+          name: edupath-ai-v3.1.0-wordpress-packages
+          path: |
+            dist/edupath-ai-theme-v3.1.0.zip
+            dist/edupath-ai-platform-v3.1.0.zip
+          if-no-files-found: error
+          retention-days: 30
