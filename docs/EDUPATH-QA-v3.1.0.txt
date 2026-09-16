@@ -1,0 +1,26 @@
+EduPath AI v3.1.0 — Targeted Microsoft settings QA
+
+PASS — PHP syntax validation across all theme/plugin PHP files.
+PASS — Portal JavaScript syntax validation.
+PASS — Active Microsoft settings UI contains:
+       Project endpoint
+       Azure OpenAI endpoint
+       API key
+       Model deployment (runtime setting)
+       Microsoft MCP endpoint
+PASS — Active Microsoft settings UI no longer contains:
+       Tenant ID / Client ID / Client Secret
+       Integration mode
+       Agent proxy URL / proxy bearer key
+       Default hosted-agent ID
+       MCP scope / project connection ID / token
+PASS — SITA Foundry project endpoint default:
+       https://sita-resource.services.ai.azure.com/api/projects/sita
+PASS — SITA Azure OpenAI endpoint default:
+       https://sita-resource.openai.azure.com/openai/v1
+PASS — Microsoft API key is sent server-side in the Azure api-key header.
+PASS — Primary Microsoft runtime uses the project-scoped OpenAI-compatible Responses route.
+PASS — Azure OpenAI v1 Responses endpoint is used as the fallback Microsoft route.
+PASS — Microsoft-hosted MCP is represented as delegated Entra/RBAC rather than falsely requiring the Foundry API key.
+PASS — v3.1 migration removes unused legacy Microsoft secrets/settings from the WordPress option record on upgrade.
+PASS — Theme/plugin ZIP integrity validation.
