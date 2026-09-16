@@ -1,0 +1,60 @@
+EduPath AI v3.1.0 — Microsoft Foundry setup
+
+The Microsoft settings have been simplified to match the credentials shown by your Foundry project.
+
+REQUIRED
+1. Project endpoint
+   https://sita-resource.services.ai.azure.com/api/projects/sita
+
+2. Azure OpenAI endpoint
+   https://sita-resource.openai.azure.com/openai/v1
+
+3. API key
+   Paste the API key shown by Microsoft Foundry.
+   Do not include "Bearer", quotes, or spaces around the key.
+
+RUNTIME
+4. Model deployment
+   Enter the deployment name shown under Foundry Models + endpoints / Deployments.
+   This is not a credential.
+   If left blank, EduPath attempts short-lived model discovery from the Azure OpenAI models list.
+
+MCP
+5. Microsoft MCP endpoint
+   https://mcp.ai.azure.com
+
+Microsoft-hosted Foundry MCP uses delegated Microsoft Entra sign-in and Azure RBAC.
+The Foundry API key is not treated as a user MCP credential.
+EduPath v3.1 therefore does not ask for a second MCP token/secret for the standard Microsoft-hosted MCP path.
+
+REMOVED FROM THE ACTIVE UI
+- Integration mode selector
+- Tenant ID
+- Client ID
+- Client Secret
+- Agent proxy URL
+- Proxy bearer key
+- Default Agent ID
+- MCP auth selector
+- MCP scope
+- MCP project connection ID
+- MCP token/secret
+
+HOW EDUPATH CALLS MICROSOFT
+Primary:
+  POST https://sita-resource.services.ai.azure.com/api/projects/sita/openai/v1/responses
+
+Fallback:
+  POST https://sita-resource.openai.azure.com/openai/v1/responses
+
+Authentication:
+  api-key: <your saved Foundry/Azure API key>
+
+CONNECTION TEST
+EduPath checks:
+- Foundry project: GET <project-endpoint>/openai/v1/responses?limit=1
+- Azure OpenAI: GET <azure-openai-endpoint>/models
+
+SECURITY
+The API key is stored server-side and encrypted when OpenSSL is available.
+Never place the key in browser JavaScript, screenshots, GitHub, or user prompts.
