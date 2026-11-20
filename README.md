@@ -1,6 +1,6 @@
 # EduPath AI Live Test
 
-Current baseline: **EduPath AI v3.1.0**
+Current baseline: **EduPath AI v3.1.1**
 
 This repository is the canonical source and build record for the EduPath AI WordPress platform created for the SITA hackathon workstream.
 
@@ -11,7 +11,7 @@ EduPath is deliberately split into two WordPress components:
 - **Theme** — presentation, responsive shell, branding, navigation, light/dark mode and visual states.
 - **Platform plugin** — authentication, OTP, learner/parent/teacher data, Ayanda AI and voice, multilingual support, CRM, reports, exams/proctoring, OCR, OpenAI/Microsoft integrations, notifications, security and audit.
 
-The complete current source is preserved under `releases/v3.1.0/source-parts/` as a chunked base64-encoded `tar.gz` source snapshot. Use `scripts/restore-v3.1.0-source.sh` to reconstruct it into a normal working tree.
+The immutable v3.1.0 source is preserved under `releases/v3.1.0/source-parts/` as a chunked base64-encoded `tar.gz` snapshot. The current v3.1.1 build restores that snapshot and applies the security overlay in `overlays/v3.1.1/` using `scripts/apply-v3.1.1-password-reset.sh`.
 
 The project-wide implementation specification is in [`MASTER-BUILD-PROMPT.md`](MASTER-BUILD-PROMPT.md).
 
@@ -52,7 +52,7 @@ The restored tree contains:
 
 ## CI
 
-`.github/workflows/build-edupath.yml` reconstructs the current source snapshot, validates PHP and JavaScript, packages installable theme/plugin ZIPs, checks archive integrity and uploads the packages as workflow artifacts.
+`.github/workflows/build-edupath.yml` reconstructs the v3.1.0 source snapshot, applies the v3.1.1 password-reset overlay, validates PHP and JavaScript, packages installable v3.1.1 theme/plugin ZIPs, checks archive integrity and uploads the packages as workflow artifacts.
 
 ## Security
 
