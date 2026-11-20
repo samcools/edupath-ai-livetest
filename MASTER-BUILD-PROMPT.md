@@ -6,7 +6,7 @@ Build and maintain **EduPath AI**, a secure, multilingual, AI-enabled education 
 
 Repository: `samcools/edupath-ai-livetest`
 
-Current baseline: **v3.1.0**
+Current baseline: **v3.1.1**
 
 Platform administrator: **Samson Sakoane** (`samson@pyrneo.com`)
 
